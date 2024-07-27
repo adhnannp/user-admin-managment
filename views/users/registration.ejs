@@ -1,0 +1,241 @@
+<% include('../layouts/header.ejs') %>  
+<style>
+    body {
+        background-color: #d0e7f9;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+    }
+    .container {
+        background-color: #e6f7ff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px; /* Maximum width for responsiveness */
+        box-sizing: border-box; /* Include padding in width calculations */
+    }
+    h1 {
+        color: #3399ff;
+        text-align: center;
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+    }
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: normal;
+        font-size: 0.9rem;
+        color: #666;
+    }
+    input[type="text"], input[type="email"], input[type="tel"], input[type="file"], input[type="password"] {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 12px; /* Space between form elements */
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #ffffff;
+        transition: background-color 0.3s ease;
+        font-size: 0.9rem;
+    }
+    input[type="text"]:hover, input[type="email"]:hover, input[type="tel"]:hover, input[type="file"]:hover, input[type="password"]:hover {
+        background-color: #e6f2ff;
+    }
+    input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #3399ff;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-size: 0.9rem;
+    }
+    input[type="submit"]:hover {
+        background-color: #267acc;
+    }
+    .error {
+        font-size: 0.8rem; /* Smaller font size for errors */
+        color: red;
+        margin-top: 2px; /* Reduced top margin */
+        margin-bottom: 10px; /* Increased bottom margin */
+        display: block;
+    }
+    p {
+        text-align: center;
+        color: red;
+        font-weight: bold;
+        margin-top: 10px;
+        font-size: 0.9rem;
+    }
+    a {
+        display: block;
+        text-align: center;
+        font-size: 0.9rem;
+        color: #3399ff;
+        text-decoration: none;
+        margin-top: 15px;
+    }
+    a:hover {
+        color: #267acc;
+    }
+</style>
+
+<div class="container">
+<h1>Create an Account</h1>
+<% if (typeof message !== 'undefined') { %>
+    <p><%= message %></p>
+<% } %>
+<form action="" method="post" enctype="multipart/form-data">
+    <label for="name">Enter Name</label>
+    <input type="text" id="name" name="name" required onkeyup="validateName()">
+    <span id="name-error"></span>
+    
+    <label for="email">Enter Email</label>
+    <input type="email" id="email" name="email" required onkeyup="validateEmail()">
+    <span id="email-error"></span>
+    
+    <label for="mno">Enter Mobile Number</label>
+    <input type="tel" id="mno" name="mno" required onkeyup="validateNumber()">
+    <span id="number-error"></span>
+    
+    <label for="image">Profile Picture</label>
+    <input type="file" id="image" name="image" required>
+    
+    <label for="password">Enter Password</label>
+    <input type="password" id="password" name="password" required onkeyup="validatePassword()">
+    <span id="password-error"></span>
+    
+    <input type="submit" value="Register" onclick="return validateForm()">
+    <span id="submit-error"></span>
+</form>
+<a href="/login">Already have an account?</a>
+</div>
+<script type="text/javascript">
+    function preventBack() { window.history.forward(); }
+    setTimeout("preventBack()", 0);
+    window.onunload = function () { null };
+
+    var nameError=document.getElementById('name-error');
+    var emailError=document.getElementById('email-error');
+    var numberError=document.getElementById('number-error');
+    var passwordError=document.getElementById('password-error');
+    var submitError=document.getElementById('submit-error');
+
+    // validate name
+function validateName(){
+    var name=document.getElementById('name').value;
+
+    if(name.length == 0){
+        nameError.innerHTML='name is required';
+        nameError.style.color = 'red';
+        return false;
+    }
+    else if(!name.match(/^[A-Za-z]{4,}/)){
+        nameError.innerHTML='required 4 charecter & only letters';
+        nameError.style.color = 'red';
+        return false;
+    }
+    else{
+        nameError.innerHTML='valid';
+        nameError.style.color = 'green';
+        return true;
+    }
+}
+
+// validate email
+function validateEmail(){
+    var email=document.getElementById('email').value;
+
+    if(email.length == 0){
+        emailError.innerHTML='email is required';
+        emailError.style.color = 'red';
+        return false;
+    }
+    if(!email.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/ )){
+        emailError.innerHTML='Invalid Email';
+        emailError.style.color = 'red';
+        return false;
+    }
+    else{
+        emailError.innerHTML='valid';
+        emailError.style.color = 'green';
+        return true;
+    }
+}
+
+//validate number
+function validateNumber(){
+    var num=document.getElementById('mno').value;
+
+    if(num.length == 0){
+        numberError.innerHTML='mobile num is required';
+        numberError.style.color = 'red';
+        return false;
+    }
+    if(num.length != 10){
+        numberError.innerHTML='mobile num should be 10 digits';
+        numberError.style.color = 'red';
+        return false;
+    }
+    if(!num.match(/^[0-9]{10}$/)){
+        numberError.innerHTML='only digits';
+        numberError.style.color = 'red';
+        return false;
+    }
+    else{
+        numberError.innerHTML='valid';
+        numberError.style.color = 'green';
+        return true;
+    }
+}
+
+//validate password
+var passwordError = document.getElementById('password-error');
+
+function validatePassword() {
+    var password = document.getElementById('password').value;
+
+    if (password.length == 0) {
+        passwordError.innerHTML = 'Password is required';
+        passwordError.style.color = 'red';
+        return false;
+    }
+    else if (password.length < 8) {
+        passwordError.innerHTML = 'Password must be at least 8 characters';
+        passwordError.style.color = 'red';
+        return false;
+    }
+    else if (password.includes(' ')) {
+        passwordError.innerHTML = 'Password cannot contain spaces';
+        passwordError.style.color = 'red';
+        return false;
+    }
+    else {
+        passwordError.innerHTML = 'Valid';
+        passwordError.style.color = 'green';
+        return true;
+    }
+}
+
+//validate form
+function validateForm(){
+	if(!validateName() || !validateEmail() || !validateNumber() || !validatePassword()){
+		submitError.innerHTML = "form is incompleate!!!";
+        submitError.style.color = 'red'; 
+		return false;
+	}
+    else{
+        submitError.innerHTML='form is valid';
+        submitError.style.color = 'green';
+        return true;
+    }
+}
+</script>
+    <!-- Bootstrap JS and dependencies -->
+<% include('../layouts/footer.ejs') %>

@@ -1,0 +1,78 @@
+<% include('../layouts/header.ejs') %>  
+<style>
+    body {
+        background-color: #d0e7f9;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+    }
+    .container {
+        background-color: #e6f7ff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        width: 300px;
+    }
+    .welcome {
+        color: #3399ff;
+        margin-bottom: 20px;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+    .user-data {
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 0.9rem;
+        word-wrap: break-word; /* Ensure text doesn't overflow */
+    }
+    img.profile-image {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin-top: 10px;
+        margin-bottom: 20px;
+        object-fit: cover;
+    }
+    button.btn {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #d9534f;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    button.btn:hover {
+        background-color: #c9302c;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="welcome">
+        Welcome
+        <br>
+        <%= user.name %>
+    </div>
+    <img src="userImages/<%= user.image %>" alt="Profile Image" class="profile-image">
+    <div class="user-data">
+        Email: <%= user.email %>
+    </div>
+    <div class="user-data">
+        Mobile No: <%= user.mobile %>
+    </div>
+    <form action="/logout" method="get">
+        <button type="submit" class="btn btn-danger">Log out</button>
+    </form>
+</div>
+<script type="text/javascript">
+    function preventBack() { window.history.forward(); }
+    setTimeout("preventBack()", 0);
+    window.onunload = function () { null };
+</script>
+<% include('../layouts/footer.ejs') %>  
